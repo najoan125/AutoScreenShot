@@ -15,6 +15,7 @@ namespace AutoScreenShot
         public bool onComplete = true;
         public bool saveClipboard = true;
         public bool saveFiles = true;
+        public double percent = 0;
 
         public override void Save(UnityModManager.ModEntry modEntry)
         {

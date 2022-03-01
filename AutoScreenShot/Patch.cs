@@ -48,8 +48,11 @@ namespace AutoScreenShot
             [HarmonyPatch(typeof(scrController), "FailAction")]
             private static void Postfix()
             {
-                isDeath = true;
-                Delay();
+                if (Main.setting.percent <= Main.Progress() && Main.setting.onDeath)
+                {
+                    isDeath = true;
+                    Delay();
+                }
             }
         }
 
@@ -58,7 +61,7 @@ namespace AutoScreenShot
         {
             public static void Prefix(scrController __instance)
             {
-                if (__instance.gameworld)
+                if (__instance.gameworld && Main.setting.onComplete)
                 {
                     isClear = true;
                     Delay();

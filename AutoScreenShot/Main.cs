@@ -18,6 +18,12 @@ namespace AutoScreenShot
         public static Harmony harmony;
         public static bool IsEnabled = false;
         public static Setting setting;
+
+        public static double Progress()
+        {
+            //return Math.Truncate((double)((float)scrController.instance.currentSeqID / (float)scrController.instance.lm.listFloors.Count * 100f) * Math.Pow(10.0, (double)2)) / Math.Pow(10.0, (double)2);
+            return Math.Truncate((double)(scrController.instance.percentComplete * 100f) * Math.Pow(10.0, 1)) / Math.Pow(10.0, 1);
+        }
         /*
         public static void LoadDll()
         {
@@ -111,9 +117,30 @@ namespace AutoScreenShot
             {
                 setting.saveFiles = false;
             }
-
             GUILayout.Label(" ");
-            if (GUILayout.Button(RDString.language == SystemLanguage.Korean ? "스크린샷 폴더 열기" : "Open the screenshots folder"))
+            String pernum = setting.percent.ToString();
+            try
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label(RDString.language == SystemLanguage.Korean ? "진행도가 " : "When progress is over");
+                String text = GUILayout.TextField(pernum);
+                GUILayout.Label(RDString.language == SystemLanguage.Korean ? "% 이상일 때 위 설정에 만족하면 스크린샷 찍기" : "%, take a screenshot when you are satisfied with the above settings");
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+                if (text != pernum)
+                {
+                    double result = double.Parse(text);
+                    if (result > 100)
+                        result = 0;
+                    setting.percent = result;
+                }
+            }
+            catch
+            {
+                setting.percent = 0;
+            }
+            GUILayout.Label(" ");
+            if (GUILayout.Button(RDString.language == SystemLanguage.Korean ? "스크린샷 폴더 열기" : "Open the screenshots folder", GUILayout.Width(200)))
             {
                 System.Diagnostics.Process.Start("AutoScreenShots");
             }
