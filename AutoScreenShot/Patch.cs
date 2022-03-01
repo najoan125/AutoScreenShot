@@ -1,17 +1,8 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media.Imaging;
 using UnityEngine;
 
 namespace AutoScreenShot
@@ -116,6 +107,19 @@ namespace AutoScreenShot
 
         [HarmonyPatch(typeof(scrController), "TogglePauseGame")]
         public static class PausePatch
+        {
+            public static bool Prefix()
+            {
+                if (isDeath || isClear)
+                {
+                    return false;
+                }
+                return true;
+            }
+        }
+
+        [HarmonyPatch(typeof(scnEditor), "Update")]
+        public static class EditorPatch
         {
             public static bool Prefix()
             {

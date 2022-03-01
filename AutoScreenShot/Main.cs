@@ -72,7 +72,7 @@ namespace AutoScreenShot
 
         private static void OnGUI(UnityModManager.ModEntry modEntry)
         {
-            bool toggleOnDeath = GUILayout.Toggle(setting.onDeath, "죽었을 때 스크린샷 찍기");
+            bool toggleOnDeath = GUILayout.Toggle(setting.onDeath, RDString.language == SystemLanguage.Korean ? "죽었을 때 스크린샷 찍기" : "Take a screenshot when die");
             if (toggleOnDeath)
             {
                 setting.onDeath = true;
@@ -82,7 +82,7 @@ namespace AutoScreenShot
                 setting.onDeath = false;
             }
 
-            bool toggleOnComplete = GUILayout.Toggle(setting.onComplete, "레벨을 클리어 했을 때 스크린샷 찍기");
+            bool toggleOnComplete = GUILayout.Toggle(setting.onComplete, RDString.language == SystemLanguage.Korean ? "레벨을 완료했을 때 스크린샷 찍기" : "Take a screenshot when completing a level");
             if (toggleOnComplete)
             {
                 setting.onComplete = true;
@@ -92,7 +92,7 @@ namespace AutoScreenShot
                 setting.onComplete = false;
             }
 
-            bool toggleClipboard = GUILayout.Toggle(setting.saveClipboard, "캡처한 사진을 클립보드에 복사하기");
+            bool toggleClipboard = GUILayout.Toggle(setting.saveClipboard, RDString.language == SystemLanguage.Korean ? "캡처한 사진을 클립보드에 복사하기" : "Copy the captured image to the clipboard");
             if (toggleClipboard)
             {
                 setting.saveClipboard = true;
@@ -102,7 +102,7 @@ namespace AutoScreenShot
                 setting.saveClipboard = false;
             }
 
-            bool togglefile = GUILayout.Toggle(setting.saveFiles, "캡처한 사진을 파일로 저장하기");
+            bool togglefile = GUILayout.Toggle(setting.saveFiles, RDString.language == SystemLanguage.Korean ? "캡처한 사진을 파일로 저장하기" : "Save the captured image as a file");
             if (togglefile)
             {
                 setting.saveFiles = true;
@@ -113,7 +113,7 @@ namespace AutoScreenShot
             }
 
             GUILayout.Label(" ");
-            if (GUILayout.Button("스크린샷 폴더 열기"))
+            if (GUILayout.Button(RDString.language == SystemLanguage.Korean ? "스크린샷 폴더 열기" : "Open the screenshots folder"))
             {
                 System.Diagnostics.Process.Start("AutoScreenShots");
             }
