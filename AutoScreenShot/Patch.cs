@@ -11,12 +11,9 @@ namespace AutoScreenShot
     {
         public static bool isDeath = false;
         public static bool isClear = false;
-        public static async void Delay(bool Clear = false)
+        public static async void Delay()
         {
-            if (!Clear)
-                await Task.Delay(1000);
-            else
-                await Task.Delay(100);
+            await Task.Delay(1);
             Bitmap bmp = new Bitmap(Screen.width, Screen.height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             System.Drawing.Graphics gr = System.Drawing.Graphics.FromImage(bmp);
             gr.CopyFromScreen(0, 0, 0, 0, bmp.Size);
@@ -45,7 +42,7 @@ namespace AutoScreenShot
         [HarmonyPatch(typeof(scrController), "PlayerControl_Update")]
         internal static class ScreenshotPatch
         {
-            [HarmonyPatch(typeof(scrController), "FailAction")]
+            [HarmonyPatch(typeof(scrController), "Fail2Action")]
             private static void Postfix()
             {
                 if (Main.setting.percent <= Main.Progress() && Main.setting.onDeath)
@@ -59,7 +56,7 @@ namespace AutoScreenShot
         [HarmonyPatch(typeof(scrController), "OnLandOnPortal")]
         public static class ClearPatch
         {
-            public static void Prefix(scrController __instance)
+            public static void Postfix(scrController __instance)
             {
                 if (__instance.gameworld && Main.setting.onComplete)
                 {
